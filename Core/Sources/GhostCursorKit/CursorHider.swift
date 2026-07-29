@@ -21,6 +21,16 @@ public final class CursorHider {
         case backgroundControlFailed(CGError)
     }
 
+    /// Why a repair was requested. Carried only so the log can show which system
+    /// event actually fired — coverage of Mission Control and App Exposé is not
+    /// documented by Apple, so this is how gaps are detected.
+    public enum ReassertTrigger: String, Sendable {
+        case spaceChanged
+        case appDeactivated
+        case systemWoke
+        case sessionBecameActive
+    }
+
     public private(set) var availability: Availability
     /// What the app wants, not what the system currently shows.
     ///
@@ -92,6 +102,39 @@ public final class CursorHider {
         wantsHidden = false
         EmergencyCursorRestore.setCursorHidden(false)
         Log.cursor.debug("Cursor shown")
+    }
+
+    /// Re-establishes a hidden cursor after the system reset this process's hide
+    /// reference count.
+    ///
+    /// The count cannot be read, so this normalises instead of incrementing:
+    /// `CGDisplayShowCursor` drives the count to 0 (it clamps there rather than
+    /// underflowing) and `CGDisplayHideCursor` then takes it to exactly 1. A bare
+    /// extra hide would take an un-reset count to 2, and the single `show()` on
+    /// quit would then leave the user with no cursor — which is why this must
+    /// never be "optimised" into one call.
+    ///
+    /// If the hide was in fact still intact, the cursor flashes for roughly one
+    /// frame. That is accepted: on the path this exists for, the cursor is already
+    /// visible and nothing flashes.
+    public func reassert(trigger: ReassertTrigger) {
+        guard canHide, wantsHidden else { return }
+
+        let showResult = CGDisplayShowCursor(CGMainDisplayID())
+        let hideResult = CGDisplayHideCursor(CGMainDisplayID())
+
+        guard hideResult == .success else {
+            // Intent is unchanged, so the next event will try again. The count is
+            // 0 here, meaning the cursor is visible while we intend it hidden —
+            // the one state this method can leave behind, and it is self-healing.
+            Log.cursor.error(
+                "Reassert failed for \(trigger.rawValue, privacy: .public): show \(showResult.rawValue, privacy: .public), hide \(hideResult.rawValue, privacy: .public)"
+            )
+            return
+        }
+
+        EmergencyCursorRestore.setCursorHidden(true)
+        Log.cursor.info("Reasserted hidden cursor after \(trigger.rawValue, privacy: .public)")
     }
 }
 
