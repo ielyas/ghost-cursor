@@ -92,23 +92,36 @@ public final class CursorHider {
 /// distinguish "the connection property was revoked" from "the hide reference
 /// count was reset" — a question no API can answer by inspection. They are
 /// `#if DEBUG` so they cannot ship, and plan 006 is expected to delete them.
+///
+/// Each hook fires after a five-second delay. That delay is the whole point:
+/// these are triggered from the menu bar menu, and menu tracking itself reveals
+/// the cursor, so a diagnostic that ran immediately would be measured while the
+/// screen was still in the state the diagnostic is trying to change. Waiting
+/// until the menu has closed and the app is back in the background makes the
+/// observation unambiguous.
 extension CursorHider {
-    /// Re-applies `SetsCursorInBackground` without touching the hide reference
-    /// count. Safe: it cannot create an imbalance.
-    public func debugReapplyBackgroundControl() {
-        let result = CGSPrivate.enableBackgroundCursorControl()
-        switch result {
-        case .none:
-            Log.cursor.error("debug: private symbols unavailable, cannot re-apply")
-        case .some(.success):
-            Log.cursor.info("debug: re-applied SetsCursorInBackground")
-        case .some(let error):
-            Log.cursor.error("debug: re-apply failed: \(error.rawValue, privacy: .public)")
+    private static let debugDelay: Duration = .seconds(5)
+
+    /// Re-applies `SetsCursorInBackground` after a delay, without touching the
+    /// hide reference count. Safe: it cannot create an imbalance.
+    public func debugReapplyBackgroundControlAfterDelay() {
+        Log.cursor.info("debug: re-apply scheduled in 5s")
+        Task { @MainActor in
+            try? await Task.sleep(for: Self.debugDelay)
+            let result = CGSPrivate.enableBackgroundCursorControl()
+            switch result {
+            case .none:
+                Log.cursor.error("debug: FIRED re-apply — private symbols unavailable")
+            case .some(.success):
+                Log.cursor.info("debug: FIRED re-apply — SetsCursorInBackground returned success")
+            case .some(let error):
+                Log.cursor.error("debug: FIRED re-apply — failed: \(error.rawValue, privacy: .public)")
+            }
         }
     }
 
-    /// Calls `CGDisplayHideCursor` a second time, deliberately bypassing the
-    /// `isHidden` guard.
+    /// Calls `CGDisplayHideCursor` a second time after a delay, deliberately
+    /// bypassing the `isHidden` guard.
     ///
     /// **This can leave the cursor permanently invisible.** If the reference
     /// count was *not* reset by the system, this raises it to 2, and the single
@@ -117,9 +130,13 @@ extension CursorHider {
     /// count when the process connection is torn down. Only use this after that
     /// recovery path has been confirmed to work — see the plan's Owner QA
     /// ordering.
-    public func debugForceHideAgain() {
-        let result = CGDisplayHideCursor(CGMainDisplayID())
-        Log.cursor.info("debug: forced extra hide, result \(result.rawValue, privacy: .public)")
+    public func debugForceHideAgainAfterDelay() {
+        Log.cursor.info("debug: forced extra hide scheduled in 5s")
+        Task { @MainActor in
+            try? await Task.sleep(for: Self.debugDelay)
+            let result = CGDisplayHideCursor(CGMainDisplayID())
+            Log.cursor.info("debug: FIRED forced extra hide, result \(result.rawValue, privacy: .public)")
+        }
     }
 }
 #endif
