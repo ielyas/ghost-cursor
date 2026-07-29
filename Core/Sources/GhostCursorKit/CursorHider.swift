@@ -86,3 +86,40 @@ public final class CursorHider {
         Log.cursor.debug("Cursor shown")
     }
 }
+
+#if DEBUG
+/// Diagnostic hooks for plan 005's re-assertion experiment. These exist to
+/// distinguish "the connection property was revoked" from "the hide reference
+/// count was reset" — a question no API can answer by inspection. They are
+/// `#if DEBUG` so they cannot ship, and plan 006 is expected to delete them.
+extension CursorHider {
+    /// Re-applies `SetsCursorInBackground` without touching the hide reference
+    /// count. Safe: it cannot create an imbalance.
+    public func debugReapplyBackgroundControl() {
+        let result = CGSPrivate.enableBackgroundCursorControl()
+        switch result {
+        case .none:
+            Log.cursor.error("debug: private symbols unavailable, cannot re-apply")
+        case .some(.success):
+            Log.cursor.info("debug: re-applied SetsCursorInBackground")
+        case .some(let error):
+            Log.cursor.error("debug: re-apply failed: \(error.rawValue, privacy: .public)")
+        }
+    }
+
+    /// Calls `CGDisplayHideCursor` a second time, deliberately bypassing the
+    /// `isHidden` guard.
+    ///
+    /// **This can leave the cursor permanently invisible.** If the reference
+    /// count was *not* reset by the system, this raises it to 2, and the single
+    /// `show()` on quit will not be enough to bring the cursor back. Recovery
+    /// is `pkill -9 -x GhostCursor`, which relies on WindowServer releasing the
+    /// count when the process connection is torn down. Only use this after that
+    /// recovery path has been confirmed to work — see the plan's Owner QA
+    /// ordering.
+    public func debugForceHideAgain() {
+        let result = CGDisplayHideCursor(CGMainDisplayID())
+        Log.cursor.info("debug: forced extra hide, result \(result.rawValue, privacy: .public)")
+    }
+}
+#endif
