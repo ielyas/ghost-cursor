@@ -5,9 +5,9 @@ import Foundation
 ///
 /// `CGDisplayHideCursor` and `CGDisplayShowCursor` are reference-counted per
 /// process connection: two hides need two shows, and an imbalance leaves the
-/// cursor permanently invisible. `isHidden` enforces a strict 0-or-1 count, so
-/// a double hide is impossible by construction. Nothing outside this type may
-/// call those two functions.
+/// cursor permanently invisible. `wantsHidden` records intent only; together
+/// with `reassert(trigger:)` it enforces a strict 0-or-1 count in practice. Nothing
+/// outside this type may call those two functions.
 @MainActor
 public final class CursorHider {
     public enum Availability: Equatable, Sendable {
@@ -22,7 +22,15 @@ public final class CursorHider {
     }
 
     public private(set) var availability: Availability
-    public private(set) var isHidden = false
+    /// What the app wants, not what the system currently shows.
+    ///
+    /// macOS resets this process's hide reference count on space transitions
+    /// without notifying anyone, so there is no way to know the live system state
+    /// — cursor visibility is not readable on macOS 27. This flag is therefore
+    /// intent only, and `reassert(trigger:)` is what reconciles intent with
+    /// reality. Anything that needs to know "should the cursor be hidden right
+    /// now" must read this; nothing may keep its own copy.
+    public private(set) var wantsHidden = false
 
     /// False only when hiding is fundamentally impossible.
     public var canHide: Bool { availability != .privateAPIMissing }
@@ -53,7 +61,7 @@ public final class CursorHider {
     }
 
     public func hide() {
-        guard canHide, !isHidden else { return }
+        guard canHide, !wantsHidden else { return }
 
         // The display argument is not meaningful for cursor visibility — the
         // cursor is a single global entity, so this hides it on every display,
@@ -64,24 +72,24 @@ public final class CursorHider {
             return
         }
 
-        isHidden = true
+        wantsHidden = true
         EmergencyCursorRestore.setCursorHidden(true)
         Log.cursor.debug("Cursor hidden")
     }
 
     public func show() {
-        guard isHidden else { return }
+        guard wantsHidden else { return }
 
         let result = CGDisplayShowCursor(CGMainDisplayID())
         guard result == .success else {
-            // `isHidden` stays true on purpose. The reference count was not
+            // `wantsHidden` stays true on purpose. The reference count was not
             // decremented, so the cursor really is still hidden, and the
-            // termination and watchdog paths must keep trying.
+            // termination and repair paths must keep trying.
             Log.cursor.error("CGDisplayShowCursor failed: \(result.rawValue, privacy: .public)")
             return
         }
 
-        isHidden = false
+        wantsHidden = false
         EmergencyCursorRestore.setCursorHidden(false)
         Log.cursor.debug("Cursor shown")
     }

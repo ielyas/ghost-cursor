@@ -10,7 +10,7 @@ import Foundation
 /// signals that arrive while the process is in a sane state are handled;
 /// crash signals are deliberately not (see the plan's Maintenance notes).
 public enum EmergencyCursorRestore {
-    /// Mirrors `CursorHider.isHidden` in a form a signal handler may legally
+    /// Mirrors `CursorHider.wantsHidden` in a form a signal handler may legally
     /// read. `sig_atomic_t` is the only integer type guaranteed safe here.
     private nonisolated(unsafe) static var cursorIsHidden: sig_atomic_t = 0
 
