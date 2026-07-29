@@ -1,0 +1,44 @@
+name: GhostCursor
+options:
+  bundleIdPrefix: sa.ni
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+
+packages:
+  GhostCursorKit:
+    path: Core
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    ENABLE_HARDENED_RUNTIME: YES
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: "-"
+    DEAD_CODE_STRIPPING: YES
+
+targets:
+  GhostCursor:
+    type: application
+    platform: macOS
+    sources:
+      - path: GhostCursor
+    dependencies:
+      - package: GhostCursorKit
+        product: GhostCursorKit
+    info:
+      path: GhostCursor/Info.plist
+      properties:
+        CFBundleName: GhostCursor
+        CFBundleDisplayName: GhostCursor
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSMinimumSystemVersion: $(MACOSX_DEPLOYMENT_TARGET)
+        LSUIElement: true
+        NSHumanReadableCopyright: ""
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: sa.ni.GhostCursor
+        GENERATE_INFOPLIST_FILE: NO
