@@ -42,6 +42,9 @@ public enum EmergencyCursorRestore {
         cursorIsHidden = hidden ? 1 : 0
     }
 
+    /// Test-only view of the signal-handler flag.
+    static var isCursorHiddenForTesting: Bool { cursorIsHidden != 0 }
+
     private static func restoreIfNeeded() {
         guard cursorIsHidden != 0 else { return }
         CGDisplayShowCursor(CGMainDisplayID())
