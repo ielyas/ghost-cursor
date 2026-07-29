@@ -19,6 +19,8 @@ final class AppState {
     /// mouse movement afterwards. Dropping it silently regresses that.
     private let reassertionCoordinator: CursorReassertionCoordinator
 
+    let loginItemManager = LoginItemManager()
+
     var autoHideEnabled: Bool {
         didSet {
             UserDefaults.standard.set(autoHideEnabled, forKey: Defaults.Key.autoHideEnabled)
@@ -55,5 +57,6 @@ final class AppState {
 
     func start() {
         idleMonitor.start()
+        loginItemManager.start()
     }
 }
