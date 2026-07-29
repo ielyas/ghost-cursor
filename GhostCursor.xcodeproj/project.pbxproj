@@ -7,13 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2AC67670084489B3C6F3C5B7 /* MenuBarContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79DB30FFD078853F4A7E0CD /* MenuBarContent.swift */; };
+		4884856767FB25737FECEB70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235A18C835B7E7F93601EF4 /* AppDelegate.swift */; };
+		BE10DACDB3DD3A59CBA5680F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7FEEF8609CE1D88894AD67 /* SettingsView.swift */; };
 		E37D5CEF13C09D42C0CD05DE /* GhostCursorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 48183A32A3F94B4F3A8B93DC /* GhostCursorKit */; };
+		F63C859265EC1DFC2A869AFD /* GhostCursorApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64DA239D414E440648CAB466 /* GhostCursorApp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		014C9C542DE22D4D1E987280 /* Core */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Core; path = Core; sourceTree = SOURCE_ROOT; };
 		253644D93268CB0378197089 /* GhostCursor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GhostCursor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4235A18C835B7E7F93601EF4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4485DE0E91B1B02BA1549CF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		5C7FEEF8609CE1D88894AD67 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		64DA239D414E440648CAB466 /* GhostCursorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostCursorApp.swift; sourceTree = "<group>"; };
+		D79DB30FFD078853F4A7E0CD /* MenuBarContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarContent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,7 +48,11 @@
 		24444C4E53835873829C1E5B /* GhostCursor */ = {
 			isa = PBXGroup;
 			children = (
+				4235A18C835B7E7F93601EF4 /* AppDelegate.swift */,
+				64DA239D414E440648CAB466 /* GhostCursorApp.swift */,
 				4485DE0E91B1B02BA1549CF4 /* Info.plist */,
+				D79DB30FFD078853F4A7E0CD /* MenuBarContent.swift */,
+				5C7FEEF8609CE1D88894AD67 /* SettingsView.swift */,
 			);
 			path = GhostCursor;
 			sourceTree = "<group>";
@@ -124,6 +136,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4884856767FB25737FECEB70 /* AppDelegate.swift in Sources */,
+				F63C859265EC1DFC2A869AFD /* GhostCursorApp.swift in Sources */,
+				2AC67670084489B3C6F3C5B7 /* MenuBarContent.swift in Sources */,
+				BE10DACDB3DD3A59CBA5680F /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
