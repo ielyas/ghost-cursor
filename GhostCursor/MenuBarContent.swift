@@ -14,6 +14,10 @@ struct MenuBarContent: View {
             appState.cursorHider.debugHideAfterDelay()
         }
 
+        Button("Reassert in 5s (debug)") {
+            appState.cursorHider.debugReassertAfterDelay()
+        }
+
         Button("Show Cursor (debug)") {
             appState.cursorHider.show()
         }

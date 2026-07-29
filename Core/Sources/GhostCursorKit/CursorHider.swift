@@ -154,5 +154,20 @@ extension CursorHider {
             hide()
         }
     }
+
+    /// Repairs five seconds after being called, long after any space transition
+    /// has settled.
+    ///
+    /// Owner QA showed `reassert` reporting success on `spaceChanged` while the
+    /// cursor stayed visible, which has two possible causes: the repair races the
+    /// system and loses, or the repair does not work at all. This separates them —
+    /// if a repair this late succeeds, the cause is timing and only timing.
+    public func debugReassertAfterDelay() {
+        Log.cursor.info("debug: reassert scheduled in 5s")
+        Task { @MainActor in
+            try? await Task.sleep(for: .seconds(5))
+            reassert(trigger: .spaceChanged)
+        }
+    }
 }
 #endif
