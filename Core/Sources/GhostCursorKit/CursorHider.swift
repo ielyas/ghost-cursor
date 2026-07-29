@@ -31,6 +31,27 @@ public final class CursorHider {
         case sessionBecameActive
     }
 
+    /// Delays, measured from the last triggering notification, at which repairs are
+    /// attempted.
+    ///
+    /// A ladder rather than a single delay because the system finishes resetting
+    /// cursor state at an unknown point after the notification, and success cannot
+    /// be detected — cursor visibility is not readable, so a repair cannot report
+    /// whether it actually took effect. The last rung is a delay already proven to
+    /// work by manual QA, so the ladder cannot fail outright; the earlier rungs
+    /// exist to make the repair feel immediate when the reset lands sooner.
+    ///
+    /// Every rung that runs while the hide is still intact costs a roughly
+    /// one-frame flash, so rungs are not free and this list should not grow without
+    /// evidence.
+    public static let reassertLadder: [Duration] = [
+        .milliseconds(150),
+        .milliseconds(600),
+        .milliseconds(1500),
+        .milliseconds(3000),
+        .milliseconds(5000),
+    ]
+
     public private(set) var availability: Availability
     /// What the app wants, not what the system currently shows.
     ///

@@ -11,6 +11,7 @@ import GhostCursorKit
 final class CursorReassertionCoordinator {
     private let cursorHider: CursorHider
     private var observers: [NSObjectProtocol] = []
+    private var pendingRepair: Task<Void, Never>?
 
     init(cursorHider: CursorHider) {
         self.cursorHider = cursorHider
@@ -41,11 +42,40 @@ final class CursorReassertionCoordinator {
         _ name: Notification.Name,
         _ trigger: CursorHider.ReassertTrigger
     ) {
-        let observer = center.addObserver(forName: name, object: nil, queue: .main) { [cursorHider] _ in
+        let observer = center.addObserver(forName: name, object: nil, queue: .main) { [weak self] _ in
             MainActor.assumeIsolated {
-                cursorHider.reassert(trigger: trigger)
+                guard let self else { return }
+                self.scheduleRepair(trigger: trigger)
             }
         }
         observers.append(observer)
+    }
+
+    /// Schedules repairs at each rung of `CursorHider.reassertLadder`.
+    ///
+    /// Repairing inline on the notification does not work: macOS posts the
+    /// notification when a space transition begins and finishes resetting cursor
+    /// state afterwards, so an immediate repair reports success and is then thrown
+    /// away. Verified by manual QA — the identical repair 5s later works.
+    ///
+    /// Debounced, because each gesture posts two notifications about 2s apart and
+    /// overlapping ladders would multiply the redundant flashes.
+    private func scheduleRepair(trigger: CursorHider.ReassertTrigger) {
+        pendingRepair?.cancel()
+        pendingRepair = Task { @MainActor [weak self] in
+            var elapsed = Duration.zero
+            for rung in CursorHider.reassertLadder {
+                do {
+                    try await Task.sleep(for: rung - elapsed)
+                } catch {
+                    // Cancelled by a newer notification, whose ladder supersedes
+                    // this one.
+                    return
+                }
+                elapsed = rung
+                guard let self else { return }
+                self.cursorHider.reassert(trigger: trigger)
+            }
+        }
     }
 }

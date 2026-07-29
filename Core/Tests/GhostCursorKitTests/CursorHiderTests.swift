@@ -95,3 +95,15 @@ import Testing
     #expect(Set(triggers.map(\.rawValue)).count == triggers.count)
     #expect(triggers.allSatisfy { !$0.rawValue.isEmpty })
 }
+
+/// The ladder's contract: strictly increasing, so the coordinator's
+/// `rung - elapsed` arithmetic never produces a negative sleep, and ending at a
+/// delay manual QA proved works.
+@Test @MainActor func reassertLadderIsIncreasingAndEndsAtAProvenDelay() {
+    let ladder = CursorHider.reassertLadder
+
+    #expect(ladder.count >= 2)
+    #expect(zip(ladder, ladder.dropFirst()).allSatisfy { $0 < $1 })
+    #expect(ladder.first! > .zero)
+    #expect(ladder.last! >= .milliseconds(5000))
+}
