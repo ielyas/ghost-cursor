@@ -91,15 +91,32 @@ public final class CursorHider {
         }
     }
 
+    /// Hides the cursor, repairing first if the system reset our hide state.
+    ///
+    /// Normalises rather than incrementing: `CGDisplayShowCursor` drives the
+    /// reference count to 0 (it clamps there rather than underflowing) and
+    /// `CGDisplayHideCursor` then takes it to exactly 1. That makes this method
+    /// idempotent and, crucially, effective even when a previous hide was silently
+    /// discarded by a space transition — the state this method used to refuse to
+    /// act on, because it returned early whenever `wantsHidden` was already true.
+    ///
+    /// No flash results in normal use: callers hide from a state where the cursor is
+    /// already visible, so the leading show is a no-op the user cannot see.
     public func hide() {
-        guard canHide, !wantsHidden else { return }
+        guard canHide else { return }
 
-        // The display argument is not meaningful for cursor visibility — the
-        // cursor is a single global entity, so this hides it on every display,
-        // which is the specified behavior.
-        let result = CGDisplayHideCursor(CGMainDisplayID())
-        guard result == .success else {
-            Log.cursor.error("CGDisplayHideCursor failed: \(result.rawValue, privacy: .public)")
+        // The display argument is not meaningful for cursor visibility — the cursor
+        // is a single global entity, so this affects every display, which is the
+        // specified behavior.
+        let showResult = CGDisplayShowCursor(CGMainDisplayID())
+        let hideResult = CGDisplayHideCursor(CGMainDisplayID())
+
+        guard hideResult == .success else {
+            // The count is 0 here, so the cursor is visible. Leaving `wantsHidden`
+            // unchanged lets the next idle period try again.
+            Log.cursor.error(
+                "Hide failed: show \(showResult.rawValue, privacy: .public), hide \(hideResult.rawValue, privacy: .public)"
+            )
             return
         }
 

@@ -31,6 +31,23 @@ import Testing
     #expect(hider.wantsHidden == false)
 }
 
+/// `hide()` must be safe to call repeatedly and must still need only one `show()`.
+/// Before this was normalising, repeated hides were merely ignored; now they must
+/// actively re-hide without accumulating reference counts.
+@Test @MainActor func repeatedHideIsIdempotent() {
+    let hider = CursorHider()
+    defer { hider.show() }
+
+    hider.hide()
+    hider.hide()
+    hider.hide()
+    #expect(hider.wantsHidden == true)
+
+    hider.show()
+    #expect(hider.wantsHidden == false)
+    #expect(EmergencyCursorRestore.isCursorHiddenForTesting == false)
+}
+
 @Test @MainActor func showWhenAlreadyVisibleIsANoOp() {
     let hider = CursorHider()
 
