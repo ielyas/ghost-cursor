@@ -10,6 +10,7 @@
 		2AC67670084489B3C6F3C5B7 /* MenuBarContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79DB30FFD078853F4A7E0CD /* MenuBarContent.swift */; };
 		4884856767FB25737FECEB70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235A18C835B7E7F93601EF4 /* AppDelegate.swift */; };
 		4B356DB11FF64948C663EFF6 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B32BAB6E5DDCCE614A77A6 /* AppState.swift */; };
+		603AAD045C1A14041536CD72 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA8FF86F59AA875306E5456 /* Defaults.swift */; };
 		BE10DACDB3DD3A59CBA5680F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7FEEF8609CE1D88894AD67 /* SettingsView.swift */; };
 		E37D5CEF13C09D42C0CD05DE /* GhostCursorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 48183A32A3F94B4F3A8B93DC /* GhostCursorKit */; };
 		E693F7CD1573496FBD8260ED /* CursorReassertionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E88E8E1E8B4645BF914AC783 /* CursorReassertionCoordinator.swift */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		014C9C542DE22D4D1E987280 /* Core */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Core; path = Core; sourceTree = SOURCE_ROOT; };
+		0AA8FF86F59AA875306E5456 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		253644D93268CB0378197089 /* GhostCursor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GhostCursor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4235A18C835B7E7F93601EF4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4485DE0E91B1B02BA1549CF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -55,6 +57,7 @@
 				4235A18C835B7E7F93601EF4 /* AppDelegate.swift */,
 				80B32BAB6E5DDCCE614A77A6 /* AppState.swift */,
 				E88E8E1E8B4645BF914AC783 /* CursorReassertionCoordinator.swift */,
+				0AA8FF86F59AA875306E5456 /* Defaults.swift */,
 				64DA239D414E440648CAB466 /* GhostCursorApp.swift */,
 				4485DE0E91B1B02BA1549CF4 /* Info.plist */,
 				D79DB30FFD078853F4A7E0CD /* MenuBarContent.swift */,
@@ -145,6 +148,7 @@
 				4884856767FB25737FECEB70 /* AppDelegate.swift in Sources */,
 				4B356DB11FF64948C663EFF6 /* AppState.swift in Sources */,
 				E693F7CD1573496FBD8260ED /* CursorReassertionCoordinator.swift in Sources */,
+				603AAD045C1A14041536CD72 /* Defaults.swift in Sources */,
 				F63C859265EC1DFC2A869AFD /* GhostCursorApp.swift in Sources */,
 				2AC67670084489B3C6F3C5B7 /* MenuBarContent.swift in Sources */,
 				BE10DACDB3DD3A59CBA5680F /* SettingsView.swift in Sources */,

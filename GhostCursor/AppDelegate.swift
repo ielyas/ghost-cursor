@@ -6,6 +6,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         Log.lifecycle.info("GhostCursor launched")
         presentDegradationAlertIfNeeded()
+        AppState.shared.start()
     }
 
     @MainActor
