@@ -10,18 +10,12 @@ struct MenuBarContent: View {
             appState.cursorHider.hide()
         }
 
+        Button("Hide Cursor in 5s (debug)") {
+            appState.cursorHider.debugHideAfterDelay()
+        }
+
         Button("Show Cursor (debug)") {
             appState.cursorHider.show()
-        }
-
-        Divider()
-
-        Button("Re-apply Background Control in 5s (debug)") {
-            appState.cursorHider.debugReapplyBackgroundControlAfterDelay()
-        }
-
-        Button("Force Extra Hide in 5s — DANGEROUS (debug)") {
-            appState.cursorHider.debugForceHideAgainAfterDelay()
         }
 
         Divider()

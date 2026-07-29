@@ -12,6 +12,10 @@ final class AppState {
     static let shared = AppState()
 
     let cursorHider = CursorHider()
+    private let reassertionCoordinator: CursorReassertionCoordinator
 
-    private init() {}
+    private init() {
+        reassertionCoordinator = CursorReassertionCoordinator(cursorHider: cursorHider)
+        reassertionCoordinator.start()
+    }
 }
