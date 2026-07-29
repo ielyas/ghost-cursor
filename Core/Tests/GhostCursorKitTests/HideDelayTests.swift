@@ -48,3 +48,39 @@ import Testing
     #expect(HideDelay.label(for: 60) == "1 minute")
     #expect(HideDelay.label(for: 120) == "2 minutes")
 }
+
+@Test func indexOfEachAllowedValueMatchesItsPosition() {
+    for (position, value) in HideDelay.allowedValues.enumerated() {
+        #expect(HideDelay.index(of: value) == position)
+    }
+}
+
+@Test func indexSnapsUnalignedValues() {
+    // 7 snaps to 5, which is at position 3.
+    #expect(HideDelay.index(of: 7) == 3)
+}
+
+@Test func indexHandlesOffScaleValues() {
+    #expect(HideDelay.index(of: -100) == 0)
+    #expect(HideDelay.index(of: 9999) == HideDelay.allowedValues.count - 1)
+    #expect(HideDelay.index(of: .nan) == HideDelay.allowedValues.firstIndex(of: HideDelay.defaultValue))
+}
+
+@Test func valueAtIndexReturnsTheAllowedValue() {
+    for (position, value) in HideDelay.allowedValues.enumerated() {
+        #expect(HideDelay.value(atIndex: position) == value)
+    }
+}
+
+@Test func valueAtIndexClampsOutOfRange() {
+    // The slider binding converts a Double to Int, so rounding at either end can
+    // produce an out-of-range position. It must not trap.
+    #expect(HideDelay.value(atIndex: -1) == HideDelay.allowedValues.first)
+    #expect(HideDelay.value(atIndex: 999) == HideDelay.allowedValues.last)
+}
+
+@Test func indexAndValueRoundTrip() {
+    for value in HideDelay.allowedValues {
+        #expect(HideDelay.value(atIndex: HideDelay.index(of: value)) == value)
+    }
+}
