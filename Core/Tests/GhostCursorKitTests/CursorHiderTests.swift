@@ -13,9 +13,9 @@ import Testing
     let hider = CursorHider()
     defer { hider.show() }
 
-    #expect(hider.isHidden == false)
+    #expect(hider.wantsHidden == false)
     hider.hide()
-    #expect(hider.isHidden == true)
+    #expect(hider.wantsHidden == true)
 }
 
 @Test @MainActor func repeatedHideDoesNotUnbalanceTheReferenceCount() {
@@ -25,13 +25,10 @@ import Testing
     hider.hide()
     hider.hide()
     hider.hide()
-    #expect(hider.isHidden == true)
+    #expect(hider.wantsHidden == true)
 
-    // A single show must be enough. If hide() had incremented the WindowServer
-    // count three times, the cursor would stay invisible after this line — the
-    // exact bug this test exists to prevent.
     hider.show()
-    #expect(hider.isHidden == false)
+    #expect(hider.wantsHidden == false)
 }
 
 @Test @MainActor func showWhenAlreadyVisibleIsANoOp() {
@@ -39,7 +36,7 @@ import Testing
 
     hider.show()
     hider.show()
-    #expect(hider.isHidden == false)
+    #expect(hider.wantsHidden == false)
 }
 
 @Test @MainActor func emergencyFlagTracksHiddenState() {
@@ -50,4 +47,51 @@ import Testing
     #expect(EmergencyCursorRestore.isCursorHiddenForTesting == true)
     hider.show()
     #expect(EmergencyCursorRestore.isCursorHiddenForTesting == false)
+}
+
+@Test @MainActor func reassertDoesNothingWhenCursorIsNotWanted() {
+    let hider = CursorHider()
+
+    hider.reassert(trigger: .spaceChanged)
+    #expect(hider.wantsHidden == false)
+    #expect(EmergencyCursorRestore.isCursorHiddenForTesting == false)
+}
+
+@Test @MainActor func reassertPreservesIntent() {
+    let hider = CursorHider()
+    defer { hider.show() }
+
+    hider.hide()
+    hider.reassert(trigger: .spaceChanged)
+    #expect(hider.wantsHidden == true)
+    #expect(EmergencyCursorRestore.isCursorHiddenForTesting == true)
+}
+
+/// The invariant that protects the user: however many repairs happened, exactly
+/// one `show()` must return to the visible state. If `reassert` ever incremented
+/// the reference count instead of normalising it, real usage would strand the
+/// cursor. A unit test cannot read the count, so this asserts the state-machine
+/// half; Owner QA item 6 checks the visible half.
+@Test @MainActor func manyReassertsStillNeedOnlyOneShow() {
+    let hider = CursorHider()
+    defer { hider.show() }
+
+    hider.hide()
+    for _ in 0..<5 {
+        hider.reassert(trigger: .spaceChanged)
+    }
+
+    hider.show()
+    #expect(hider.wantsHidden == false)
+    #expect(EmergencyCursorRestore.isCursorHiddenForTesting == false)
+}
+
+@Test @MainActor func everyTriggerIsLoggable() {
+    // Guards against a case being added with an empty or duplicated rawValue,
+    // which would make the log evidence in Owner QA unreadable.
+    let triggers: [CursorHider.ReassertTrigger] = [
+        .spaceChanged, .appDeactivated, .systemWoke, .sessionBecameActive
+    ]
+    #expect(Set(triggers.map(\.rawValue)).count == triggers.count)
+    #expect(triggers.allSatisfy { !$0.rawValue.isEmpty })
 }
