@@ -289,3 +289,84 @@ struct PollIntervalTests {
         #expect(machine.pollInterval == .milliseconds(250))
     }
 }
+
+@Suite("Force reveal")
+struct ForceRevealTests {
+    @Test func revealsAndHoldsWhenHidden() {
+        var machine = hiddenMachine()
+        let effect = machine.forceReveal(idleSeconds: 5)
+        #expect(effect == .showCursor)
+        #expect(machine.state == .revealHeld)
+    }
+
+    @Test func holdsWithoutRevealWhenWatching() {
+        var machine = HideStateMachine()
+        _ = machine.tick(input())
+        let effect = machine.forceReveal(idleSeconds: 5)
+        #expect(effect == .none)
+        #expect(machine.state == .revealHeld)
+    }
+
+    @Test func holdsWhenSuspended() {
+        var machine = HideStateMachine()
+        _ = machine.tick(input())
+        _ = machine.tick(input(buttons: true))
+        #expect(machine.state == .suspended)
+        let effect = machine.forceReveal(idleSeconds: 5)
+        #expect(effect == .none)
+        #expect(machine.state == .revealHeld)
+    }
+
+    @Test func doesNothingWhileDisabled() {
+        var machine = HideStateMachine()
+        let effect = machine.forceReveal(idleSeconds: 5)
+        #expect(effect == .none)
+        #expect(machine.state == .disabled)
+    }
+
+    @Test func isIdempotent() {
+        var machine = hiddenMachine()
+        #expect(machine.forceReveal(idleSeconds: 5) == .showCursor)
+        #expect(machine.forceReveal(idleSeconds: 6) == .none)
+        #expect(machine.forceReveal(idleSeconds: 7) == .none)
+        #expect(machine.state == .revealHeld)
+    }
+
+    /// The regression this plan exists to prevent: a machine woken from sleep has
+    /// an enormous mouse-idle reading, and must NOT hide until the user moves.
+    @Test func doesNotRehideWhileIdleKeepsGrowingAfterWake() {
+        var machine = hiddenMachine(delay: 3)
+        _ = machine.forceReveal(idleSeconds: 3600)
+
+        for idle in [3601.0, 3602.0, 3603.0, 7200.0] {
+            let effect = machine.tick(input(idle: idle, delay: 3))
+            #expect(effect == .none)
+            #expect(machine.state == .revealHeld)
+        }
+    }
+
+    @Test func releasesOnRealInput() {
+        var machine = hiddenMachine()
+        _ = machine.forceReveal(idleSeconds: 3600)
+        let effect = machine.tick(input(idle: 0, delay: 3))
+        #expect(effect == .none)
+        #expect(machine.state == .watching)
+    }
+
+    @Test func releasesOnButtonPress() {
+        var machine = hiddenMachine()
+        _ = machine.forceReveal(idleSeconds: 3600)
+        let effect = machine.tick(input(idle: 3601, delay: 3, buttons: true))
+        #expect(effect == .none)
+        #expect(machine.state == .watching)
+    }
+
+    @Test func hidesAgainAfterInputAndAFreshIdlePeriod() {
+        var machine = hiddenMachine(delay: 3)
+        #expect(machine.forceReveal(idleSeconds: 3600) == .showCursor)
+        _ = machine.tick(input(idle: 0, delay: 3))
+        #expect(machine.state == .watching)
+        #expect(machine.tick(input(idle: 3, delay: 3)) == .hideCursor)
+        #expect(machine.state == .hidden)
+    }
+}
