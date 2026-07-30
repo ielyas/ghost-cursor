@@ -27,8 +27,6 @@ public final class CursorHider {
     public enum ReassertTrigger: String, Sendable {
         case spaceChanged
         case appDeactivated
-        case systemWoke
-        case sessionBecameActive
     }
 
     /// Delays, measured from the last triggering notification, at which repairs are

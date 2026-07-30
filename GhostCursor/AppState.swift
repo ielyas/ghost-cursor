@@ -14,6 +14,10 @@ final class AppState {
 
     let cursorHider: CursorHider
     let idleMonitor: IdleMonitor
+    /// Retained for the same reason as `reassertionCoordinator`: it owns the
+    /// observers and the display callback. Dropping it silently removes the
+    /// safety net.
+    private let systemEventMonitor: SystemEventMonitor
     /// Retained, not optional: it owns the notification observers that partially
     /// cover the one drift case the idle loop cannot see — a system reveal with no
     /// mouse movement afterwards. Dropping it silently regresses that.
@@ -41,6 +45,7 @@ final class AppState {
         let hider = CursorHider()
         cursorHider = hider
         idleMonitor = IdleMonitor(cursorHider: hider)
+        systemEventMonitor = SystemEventMonitor(idleMonitor: idleMonitor)
         reassertionCoordinator = CursorReassertionCoordinator(cursorHider: hider)
         reassertionCoordinator.start()
 
@@ -58,5 +63,6 @@ final class AppState {
     func start() {
         idleMonitor.start()
         loginItemManager.start()
+        systemEventMonitor.start()
     }
 }

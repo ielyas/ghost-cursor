@@ -106,9 +106,7 @@ import Testing
 @Test @MainActor func everyTriggerIsLoggable() {
     // Guards against a case being added with an empty or duplicated rawValue,
     // which would make the log evidence in Owner QA unreadable.
-    let triggers: [CursorHider.ReassertTrigger] = [
-        .spaceChanged, .appDeactivated, .systemWoke, .sessionBecameActive
-    ]
+    let triggers: [CursorHider.ReassertTrigger] = [.spaceChanged, .appDeactivated]
     #expect(Set(triggers.map(\.rawValue)).count == triggers.count)
     #expect(triggers.allSatisfy { !$0.rawValue.isEmpty })
 }

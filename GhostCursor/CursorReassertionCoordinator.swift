@@ -22,11 +22,13 @@ final class CursorReassertionCoordinator {
         // and Spaces switching all reset the hide count. These notifications post
         // on NSWorkspace's OWN notification center, not the default one — using
         // NotificationCenter.default here silently never fires.
+        //
+        // Wake and session-activation used to be repaired here. They are
+        // stand-down events, not repair events — a returning user wants the
+        // cursor back — so `SystemEventMonitor` force-reveals on them instead.
         let workspaceCenter = NSWorkspace.shared.notificationCenter
 
         observe(workspaceCenter, NSWorkspace.activeSpaceDidChangeNotification, .spaceChanged)
-        observe(workspaceCenter, NSWorkspace.didWakeNotification, .systemWoke)
-        observe(workspaceCenter, NSWorkspace.sessionDidBecomeActiveNotification, .sessionBecameActive)
 
         // GhostCursor's own deactivation matters because a hide issued while it is
         // frontmost — which is what happens when the user picks a menu item — is
