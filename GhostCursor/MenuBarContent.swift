@@ -26,10 +26,16 @@ struct MenuBarContent: View {
         }
         .disabled(!appState.updaterManager.canCheckForUpdates)
 
+        // SettingsLink is what actually opens the Settings scene from a menu
+        // bar item. Activation / Dock policy is handled when the scene appears
+        // (see SettingsView) so the window comes to the front under LSUIElement.
         SettingsLink {
             Text("Settings…")
         }
         .keyboardShortcut(",", modifiers: .command)
+        .simultaneousGesture(TapGesture().onEnded {
+            SettingsWindowOpener.prepareToPresent()
+        })
 
         Divider()
 

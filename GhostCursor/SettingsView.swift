@@ -31,6 +31,10 @@ struct SettingsView: View {
                 selection = pending
                 appState.pendingSettingsTab = nil
             }
+            SettingsWindowOpener.bringSettingsWindowForward()
+        }
+        .onDisappear {
+            SettingsWindowOpener.noteSettingsClosed()
         }
     }
 }
