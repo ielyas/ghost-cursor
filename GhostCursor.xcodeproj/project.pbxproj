@@ -14,6 +14,7 @@
 		448F9F3F5481C59A8C24D86E /* ShortcutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF1582A6489AF22A1E389EB /* ShortcutSettingsView.swift */; };
 		4884856767FB25737FECEB70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235A18C835B7E7F93601EF4 /* AppDelegate.swift */; };
 		4B356DB11FF64948C663EFF6 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B32BAB6E5DDCCE614A77A6 /* AppState.swift */; };
+		5196D397B27AAE78165D70C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02D62334F659CA7E2083D29B /* Assets.xcassets */; };
 		53E12B607FB0F70426A0C9C1 /* ShortcutRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A36592E9A8551BFF0A18B0 /* ShortcutRecorderView.swift */; };
 		603AAD045C1A14041536CD72 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA8FF86F59AA875306E5456 /* Defaults.swift */; };
 		7C2A0EE9EB49A3ECB2C9ACE6 /* AboutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7F7241F1628E47FA2FCBD /* AboutSettingsView.swift */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		014C9C542DE22D4D1E987280 /* Core */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Core; path = Core; sourceTree = SOURCE_ROOT; };
+		02D62334F659CA7E2083D29B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		07A36592E9A8551BFF0A18B0 /* ShortcutRecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutRecorderView.swift; sourceTree = "<group>"; };
 		0AA8FF86F59AA875306E5456 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		215AD8F94E77AFF84EF1F4F1 /* LoginItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemManager.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 				30E7F7241F1628E47FA2FCBD /* AboutSettingsView.swift */,
 				4235A18C835B7E7F93601EF4 /* AppDelegate.swift */,
 				80B32BAB6E5DDCCE614A77A6 /* AppState.swift */,
+				02D62334F659CA7E2083D29B /* Assets.xcassets */,
 				E88E8E1E8B4645BF914AC783 /* CursorReassertionCoordinator.swift */,
 				0AA8FF86F59AA875306E5456 /* Defaults.swift */,
 				BBE3AF9AB3CACC1534B65593 /* GeneralSettingsView.swift */,
@@ -117,6 +120,7 @@
 			buildConfigurationList = EE1DBF6B428BD2AA26F08F88 /* Build configuration list for PBXNativeTarget "GhostCursor" */;
 			buildPhases = (
 				9CD09219DA9B7E157B4E1A2A /* Sources */,
+				A41B42D5F3F20ED92A23B83B /* Resources */,
 				C9A8B31E4531F86C1BB9A00A /* Frameworks */,
 			);
 			buildRules = (
@@ -166,6 +170,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A41B42D5F3F20ED92A23B83B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5196D397B27AAE78165D70C6 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9CD09219DA9B7E157B4E1A2A /* Sources */ = {
