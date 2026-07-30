@@ -12,6 +12,7 @@
 		1C87474955C3F681E8590759 /* SettingsWindowOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C358C0D361517A4E908A6985 /* SettingsWindowOpener.swift */; };
 		2AC67670084489B3C6F3C5B7 /* MenuBarContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79DB30FFD078853F4A7E0CD /* MenuBarContent.swift */; };
 		448F9F3F5481C59A8C24D86E /* ShortcutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF1582A6489AF22A1E389EB /* ShortcutSettingsView.swift */; };
+		47FE294248F782992079D4F9 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 62F257B89852ADBB9257B62A /* Sparkle */; };
 		4884856767FB25737FECEB70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235A18C835B7E7F93601EF4 /* AppDelegate.swift */; };
 		4B356DB11FF64948C663EFF6 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B32BAB6E5DDCCE614A77A6 /* AppState.swift */; };
 		5196D397B27AAE78165D70C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02D62334F659CA7E2083D29B /* Assets.xcassets */; };
@@ -56,6 +57,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E37D5CEF13C09D42C0CD05DE /* GhostCursorKit in Frameworks */,
+				47FE294248F782992079D4F9 /* Sparkle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +132,7 @@
 			name = GhostCursor;
 			packageProductDependencies = (
 				48183A32A3F94B4F3A8B93DC /* GhostCursorKit */,
+				62F257B89852ADBB9257B62A /* Sparkle */,
 			);
 			productName = GhostCursor;
 			productReference = 253644D93268CB0378197089 /* GhostCursor.app */;
@@ -159,6 +162,7 @@
 			mainGroup = 03D998C9C3B2D8E77FCEEFFA;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				08216121AA95F630881E3AB5 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				3D76FDC3C5D18E276BF655BE /* XCLocalSwiftPackageReference "Core" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -402,10 +406,26 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		08216121AA95F630881E3AB5 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		48183A32A3F94B4F3A8B93DC /* GhostCursorKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = GhostCursorKit;
+		};
+		62F257B89852ADBB9257B62A /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 08216121AA95F630881E3AB5 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
