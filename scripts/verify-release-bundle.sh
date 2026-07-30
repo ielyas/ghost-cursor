@@ -13,13 +13,21 @@ EXPECT_NOTARIZED="${EXPECT_NOTARIZED:-1}"
 
 fail() { echo "ERROR: $*" >&2; exit 1; }
 
+team_signed() {
+  local target="$1"
+  local info
+  info="$(codesign -dvv "$target" 2>&1)" || return 1
+  grep -q "TeamIdentifier=$TEAM_ID" <<< "$info"
+}
+
 echo "==> codesign --verify on $APP"
 codesign --verify --deep --strict --verbose=2 "$APP"
 
 echo "==> Developer ID team and Hardened Runtime on the app"
-codesign -dvv "$APP" 2>&1 | grep -q "TeamIdentifier=$TEAM_ID" \
+team_signed "$APP" \
   || fail "app is not signed by team $TEAM_ID (ad-hoc or wrong certificate)"
-codesign -d --verbose=4 "$APP" 2>&1 | grep -Eq 'flags=.*runtime' \
+runtime_info="$(codesign -d --verbose=4 "$APP" 2>&1)" || fail "could not read code signature on the app"
+grep -Eq 'flags=.*runtime' <<< "$runtime_info" \
   || fail "Hardened Runtime is not enabled on the app"
 
 echo "==> Sparkle's nested code is signed the same way"
@@ -32,7 +40,7 @@ for nested in \
   "$FW/XPCServices/Downloader.xpc"
 do
   [[ -e "$nested" ]] || fail "missing nested component: $nested"
-  codesign -dvv "$nested" 2>&1 | grep -q "TeamIdentifier=$TEAM_ID" \
+  team_signed "$nested" \
     || fail "$nested is not signed by team $TEAM_ID"
 done
 
