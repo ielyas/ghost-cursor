@@ -13,6 +13,10 @@ enum Defaults {
         /// Records that the first-run registration attempt happened, so the user
         /// turning the login item off in System Settings is never overridden.
         static let hasRequestedLoginItem = "hasRequestedLoginItem"
+        /// Absent when no shortcut is assigned, which is a supported state — so
+        /// these are deliberately left out of `register()`.
+        static let hotKeyKeyCode = "hotKeyKeyCode"
+        static let hotKeyModifiers = "hotKeyModifiers"
     }
 
     static func register() {
