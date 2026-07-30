@@ -12,6 +12,9 @@ brings it back the instant you do.
 
 Requires macOS 14 or later.
 
+Licensed under the [GNU General Public License v3](LICENSE).
+Copyright © 2026 National Idea LLC.
+
 ## Recover a stuck cursor
 
 This is the one thing worth knowing before you use it.
