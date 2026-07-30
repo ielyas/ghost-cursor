@@ -80,6 +80,9 @@ trap 'rm -rf "$STAGING"' EXIT
 ln -s /Applications "$STAGING/Applications"
 hdiutil create -volname "GhostCursor" -srcfolder "$STAGING" -ov -format UDZO -fs HFS+ "$DMG"
 
+echo "==> Sign the DMG before notarization"
+codesign --force --sign "$APPLE_SIGNING_IDENTITY" --timestamp "$DMG"
+
 echo "==> Notarize and staple the DMG"
 xcrun notarytool submit "$DMG" \
   --apple-id "$APPLE_ID" --team-id "$APPLE_TEAM_ID" --password "$APPLE_PASSWORD" --wait
