@@ -14,7 +14,7 @@ struct GhostCursorApp: App {
             // Shape, not tint: the spec's accessibility rule forbids state shown
             // by colour alone, and the menu bar renders template images in a
             // single colour anyway.
-            Image(systemName: appState.autoHideEnabled ? "cursorarrow.slash" : "cursorarrow")
+            Image(appState.autoHideEnabled ? "MenuBarIconOff" : "MenuBarIconOn")
                 .accessibilityLabel(
                     appState.autoHideEnabled
                         ? "GhostCursor, auto-hide on"
