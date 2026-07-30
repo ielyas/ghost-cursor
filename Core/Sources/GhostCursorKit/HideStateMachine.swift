@@ -42,8 +42,8 @@ public struct HideStateMachine: Sendable {
     /// only ever grows, so any smaller reading proves new input arrived.
     private var idleSecondsAtHide: TimeInterval = 0
     private var hiddenSince: TimeInterval = 0
-    /// Idle reading captured when the watchdog fired, used the same way.
-    private var idleSecondsAtWatchdog: TimeInterval = 0
+    /// Idle reading captured at the last force-reveal, used the same way.
+    private var idleSecondsAtReveal: TimeInterval = 0
 
     public init() {}
 
@@ -85,8 +85,8 @@ public struct HideStateMachine: Sendable {
                 return .showCursor
             }
             if input.now - hiddenSince >= Self.maxHiddenDuration {
-                state = .watchdogHeld
-                idleSecondsAtWatchdog = input.idleSeconds
+                state = .revealHeld
+                idleSecondsAtReveal = input.idleSeconds
                 return .showCursor
             }
             return .none
@@ -96,8 +96,8 @@ public struct HideStateMachine: Sendable {
             state = .watching
             return .none
 
-        case .watchdogHeld:
-            if input.mouseButtonsPressed || input.idleSeconds < idleSecondsAtWatchdog {
+        case .revealHeld:
+            if input.mouseButtonsPressed || input.idleSeconds < idleSecondsAtReveal {
                 state = .watching
             }
             return .none

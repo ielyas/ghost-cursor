@@ -11,11 +11,14 @@ public enum HideState: Equatable, Sendable {
     case hidden
     /// Temporarily inhibited because a mouse button is held or a drag is active.
     case suspended
-    /// The watchdog force-revealed the cursor. Hiding stays inhibited until real
-    /// input arrives, which prevents an immediate re-hide: after a watchdog
-    /// reveal the idle counter is still far above the delay, so returning
-    /// straight to `watching` would flicker the cursor on every poll.
-    case watchdogHeld
+    /// A force-reveal happened and hiding is inhibited until real input arrives.
+    ///
+    /// Entered from two places: the watchdog ceiling, and a system event that
+    /// means the user is leaving or returning (`forceReveal(idleSeconds:)`).
+    /// Both need the same thing — after the reveal the idle counter is still far
+    /// above the delay, so going straight back to `watching` would re-hide on the
+    /// very next poll and flicker the cursor indefinitely.
+    case revealHeld
 }
 
 /// The side effect a `tick` requires of the caller. Keeping effects as returned

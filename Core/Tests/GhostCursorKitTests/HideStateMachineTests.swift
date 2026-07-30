@@ -179,10 +179,10 @@ struct DisablingTests {
         #expect(machine.state == .disabled)
     }
 
-    @Test func disablingFromWatchdogHeldEmitsNothing() {
+    @Test func disablingFromRevealHeldEmitsNothing() {
         var machine = hiddenMachine(hiddenAt: 0)
         _ = machine.tick(input(idle: 3, now: HideStateMachine.maxHiddenDuration))
-        #expect(machine.state == .watchdogHeld)
+        #expect(machine.state == .revealHeld)
         let effect = machine.tick(input(enabled: false))
         #expect(effect == .none)
         #expect(machine.state == .disabled)
@@ -211,17 +211,17 @@ struct WatchdogTests {
         var machine = hiddenMachine(hiddenAt: 0)
         let effect = machine.tick(input(idle: 3, now: HideStateMachine.maxHiddenDuration))
         #expect(effect == .showCursor)
-        #expect(machine.state == .watchdogHeld)
+        #expect(machine.state == .revealHeld)
     }
 
     @Test func heldStateDoesNotImmediatelyRehide() {
         var machine = hiddenMachine(hiddenAt: 0)
         _ = machine.tick(input(idle: 3, now: HideStateMachine.maxHiddenDuration))
-        #expect(machine.state == .watchdogHeld)
+        #expect(machine.state == .revealHeld)
         for _ in 0..<10 {
             let effect = machine.tick(input(idle: 999, delay: 3))
             #expect(effect == .none)
-            #expect(machine.state == .watchdogHeld)
+            #expect(machine.state == .revealHeld)
         }
     }
 
@@ -283,7 +283,7 @@ struct PollIntervalTests {
         #expect(machine.pollInterval == .milliseconds(250))
     }
 
-    @Test func isSlowWhileWatchdogHeld() {
+    @Test func isSlowWhileRevealHeld() {
         var machine = hiddenMachine(hiddenAt: 0)
         _ = machine.tick(input(idle: 3, now: HideStateMachine.maxHiddenDuration))
         #expect(machine.pollInterval == .milliseconds(250))
