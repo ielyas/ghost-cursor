@@ -4,7 +4,9 @@ A tiny macOS menu bar app that hides the mouse cursor when you stop moving it, a
 brings it back the instant you do.
 
 - **No permissions.** No Accessibility prompt, no Input Monitoring prompt, nothing.
-- **No network.** Not a single outbound connection, ever.
+- **No telemetry.** The only network request GhostCursor ever makes is the update
+  check you ask for, from the menu bar or Settings › About. It never checks on
+  its own.
 - **No data.** GhostCursor reads only *how long ago* a mouse event happened. It
   cannot see what you type, even in principle.
 
@@ -46,6 +48,12 @@ The cursor never hides while a mouse button is held, so drags and selections are
 safe. It also reveals itself on display sleep, wake, screen lock and display
 changes, and stays visible until you move the mouse again.
 
+## Updates
+
+Pick **Check for Updates…** from the menu bar icon, or from Settings › About.
+That is the only moment GhostCursor talks to the network — there is no
+background check, no scheduled polling, and no prompt asking to enable one.
+
 ## Building from source
 
 ```sh
@@ -61,7 +69,8 @@ package:
 swift test --package-path Core
 ```
 
-There are no third-party dependencies, and there never will be.
+Sparkle is the only third-party dependency, and it exists solely to deliver
+updates. Everything else is hand-rolled.
 
 ## Reporting a bug
 

@@ -44,7 +44,7 @@ struct AboutSettingsView: View {
             }
 
             Section("Privacy") {
-                Text("GhostCursor makes no network requests, stores no data, and needs no system permissions. It reads only how long ago a mouse event happened — never what the event was.")
+                Text("GhostCursor stores no data, sends nothing anywhere, and needs no system permissions. It reads only how long ago a mouse event happened — never what the event was. The one time it uses the network is the update check you ask for.")
             }
 
             Section("Recover a stuck cursor") {
