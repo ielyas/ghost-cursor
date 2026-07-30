@@ -103,4 +103,32 @@ public struct HideStateMachine: Sendable {
             return .none
         }
     }
+
+    /// Force-reveals the cursor and inhibits hiding until real mouse input arrives.
+    ///
+    /// Called for system events meaning the user is leaving or returning: display
+    /// sleep, wake, screen lock, session switch, display reconfiguration.
+    ///
+    /// `PROJECT_SPEC.md`'s failure-mode table says to "reset to `watching`" on
+    /// these events. That is wrong, and this deliberately does not do it: mouse
+    /// idle time keeps growing while the machine sleeps, so a machine woken by a
+    /// keypress is far above the delay and `watching` would hide the cursor on the
+    /// very next tick — before the user has touched the mouse. `revealHeld`
+    /// already exists to solve exactly that shape of problem for the watchdog, so
+    /// it is reused rather than duplicated.
+    ///
+    /// - Parameter idleSeconds: the current idle reading, kept as the baseline
+    ///   that proves later input actually arrived.
+    public mutating func forceReveal(idleSeconds: TimeInterval) -> HideEffect {
+        // `disabled` means the feature is off and the cursor is already visible.
+        // Moving to `revealHeld` from here would silently re-arm hiding as soon as
+        // the user moved the mouse, turning a system event into a way to switch
+        // the feature back on.
+        guard state != .disabled else { return .none }
+
+        let needsReveal = state == .hidden
+        state = .revealHeld
+        idleSecondsAtReveal = idleSeconds
+        return needsReveal ? .showCursor : .none
+    }
 }

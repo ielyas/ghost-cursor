@@ -70,4 +70,25 @@ public final class IdleMonitor {
             cursorHider.show()
         }
     }
+
+    /// Applies a system-driven reveal. Kept to pure dispatch for the same reason
+    /// `tickOnce` is — the decision lives in `HideStateMachine`, where it is
+    /// unit-tested.
+    public func forceReveal(reason: RevealReason) {
+        let effect = machine.forceReveal(idleSeconds: idleSource.secondsSinceLastMouseEvent())
+
+        switch effect {
+        case .none:
+            break
+        case .showCursor:
+            cursorHider.show()
+        case .hideCursor:
+            // Unreachable today. Logged rather than ignored so that a future
+            // change to `forceReveal` cannot introduce a silent hide on wake,
+            // which is the exact bug this whole plan exists to prevent.
+            Log.idle.error("forceReveal produced hideCursor for \(reason.rawValue, privacy: .public)")
+        }
+
+        Log.idle.info("Force reveal: \(reason.rawValue, privacy: .public)")
+    }
 }
