@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/icon.png" width="128" height="128" alt="GhostCursor">
+</p>
+
 # GhostCursor
 
 A tiny macOS menu bar app that hides the mouse cursor when you stop moving it, and
@@ -11,6 +15,8 @@ brings it back the instant you do.
   cannot see what you type, even in principle.
 
 Requires macOS 14 or later.
+
+See [CHANGELOG.md](CHANGELOG.md) for release history.
 
 Licensed under the [GNU General Public License v3](LICENSE).
 Copyright © 2026 National Idea LLC.
@@ -50,6 +56,14 @@ when auto-hide is on.
 The cursor never hides while a mouse button is held, so drags and selections are
 safe. It also reveals itself on display sleep, wake, screen lock and display
 changes, and stays visible until you move the mouse again.
+
+<p align="center">
+  <img src="docs/settings-general.png" width="360" alt="Settings › General">
+  <img src="docs/settings-shortcut.png" width="360" alt="Settings › Shortcut">
+</p>
+<p align="center">
+  <img src="docs/settings-about.png" width="360" alt="Settings › About">
+</p>
 
 ## Updates
 

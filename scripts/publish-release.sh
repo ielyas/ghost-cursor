@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Publish an already-built, notarized release: appcast -> R2 -> GitHub Release.
+# Release notes come from CHANGELOG.md (see scripts/changelog-release-notes.sh).
 # Run scripts/release.sh first.
 set -euo pipefail
 
@@ -25,6 +26,7 @@ export CLOUDFLARE_ACCOUNT_ID="${CLOUDFLARE_ACCOUNT_ID:-}"
 
 command -v wrangler >/dev/null || { echo "ERROR: wrangler not found" >&2; exit 1; }
 command -v gh >/dev/null || { echo "ERROR: gh not found" >&2; exit 1; }
+command -v python3 >/dev/null || { echo "ERROR: python3 not found (needed for Sparkle HTML notes)" >&2; exit 1; }
 
 VERSION="${1:-$(awk -F'"' '/^[[:space:]]*MARKETING_VERSION:/ {print $2; exit}' project.yml)}"
 BUILD="$(awk -F'"' '/^[[:space:]]*CURRENT_PROJECT_VERSION:/ {print $2; exit}' project.yml)"
@@ -33,6 +35,16 @@ BUILD="$(awk -F'"' '/^[[:space:]]*CURRENT_PROJECT_VERSION:/ {print $2; exit}' pr
 TAG="v$VERSION"
 DMG="dist/GhostCursor-$VERSION.dmg"
 [[ -f "$DMG" ]] || { echo "ERROR: $DMG not found. Run scripts/release.sh first." >&2; exit 1; }
+
+NOTES_MD="$(mktemp)"
+NOTES_HTML="$(mktemp)"
+trap 'rm -f "$NOTES_MD" "$NOTES_HTML"' EXIT
+
+echo "==> Compose release notes from CHANGELOG.md"
+"$ROOT/scripts/changelog-release-notes.sh" "$VERSION" >"$NOTES_MD"
+"$ROOT/scripts/changelog-release-notes.sh" "$VERSION" --html >"$NOTES_HTML"
+[[ -s "$NOTES_MD" ]] || { echo "ERROR: empty markdown notes for $VERSION" >&2; exit 1; }
+[[ -s "$NOTES_HTML" ]] || { echo "ERROR: empty HTML notes for $VERSION" >&2; exit 1; }
 
 echo "==> Confirm the artifact is notarized"
 xcrun stapler validate "$DMG"
@@ -62,9 +74,7 @@ mkdir -p "$FEED_DIR"
 cp -f "$DMG" "$FEED_DIR/"
 
 # Sparkle picks up release notes from a file whose name matches the archive.
-if [[ -f "release-notes/$VERSION.html" ]]; then
-  cp -f "release-notes/$VERSION.html" "$FEED_DIR/GhostCursor-$VERSION.html"
-fi
+cp -f "$NOTES_HTML" "$FEED_DIR/GhostCursor-$VERSION.html"
 
 # Seed from the live feed so previously published entries survive. A 404 on the
 # very first release is expected.
@@ -97,12 +107,10 @@ wrangler r2 object put "$BUCKET/GhostCursor-$VERSION.dmg" --file="$DMG" \
 wrangler r2 object put "$BUCKET/GhostCursor.dmg" --file="$DMG" \
   --content-type="application/x-apple-diskimage" \
   --cache-control="public, max-age=60, must-revalidate" --remote
-if [[ -f "$FEED_DIR/GhostCursor-$VERSION.html" ]]; then
-  wrangler r2 object put "$BUCKET/GhostCursor-$VERSION.html" \
-    --file="$FEED_DIR/GhostCursor-$VERSION.html" \
-    --content-type="text/html; charset=utf-8" \
-    --cache-control="public, max-age=300" --remote
-fi
+wrangler r2 object put "$BUCKET/GhostCursor-$VERSION.html" \
+  --file="$FEED_DIR/GhostCursor-$VERSION.html" \
+  --content-type="text/html; charset=utf-8" \
+  --cache-control="public, max-age=300" --remote
 wrangler r2 object put "$BUCKET/appcast.xml" --file="$APPCAST" \
   --content-type="application/xml; charset=utf-8" \
   --cache-control="no-cache, must-revalidate" --remote
@@ -117,12 +125,10 @@ REMOTE_SIZE="$(curl -fsSLI "$BASE_URL/GhostCursor-$VERSION.dmg" \
   || { echo "ERROR: published DMG size $REMOTE_SIZE != local $LOCAL_SIZE" >&2; exit 1; }
 
 echo "==> Create GitHub Release $TAG"
-NOTES_ARG=(--generate-notes)
-[[ -f "release-notes/$VERSION.md" ]] && NOTES_ARG=(--notes-file "release-notes/$VERSION.md")
 gh release create "$TAG" \
   --title "GhostCursor $VERSION" \
   --target "$(git rev-parse HEAD)" \
-  "${NOTES_ARG[@]}" \
+  --notes-file "$NOTES_MD" \
   "$DMG"
 
 echo ""
