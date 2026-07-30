@@ -16,6 +16,7 @@
 		4B356DB11FF64948C663EFF6 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B32BAB6E5DDCCE614A77A6 /* AppState.swift */; };
 		53E12B607FB0F70426A0C9C1 /* ShortcutRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A36592E9A8551BFF0A18B0 /* ShortcutRecorderView.swift */; };
 		603AAD045C1A14041536CD72 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA8FF86F59AA875306E5456 /* Defaults.swift */; };
+		7C2A0EE9EB49A3ECB2C9ACE6 /* AboutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E7F7241F1628E47FA2FCBD /* AboutSettingsView.swift */; };
 		9F55E23A13F56E140DE21A40 /* LoginItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 215AD8F94E77AFF84EF1F4F1 /* LoginItemManager.swift */; };
 		BE10DACDB3DD3A59CBA5680F /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7FEEF8609CE1D88894AD67 /* SettingsView.swift */; };
 		E2178C03538402C5C0BCB3C1 /* SettingsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD7871B4DADB2D0C6C2BA6E3 /* SettingsTab.swift */; };
@@ -32,6 +33,7 @@
 		215AD8F94E77AFF84EF1F4F1 /* LoginItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginItemManager.swift; sourceTree = "<group>"; };
 		253644D93268CB0378197089 /* GhostCursor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GhostCursor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2973EF1E6B8F2DD24322FF24 /* HotKeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyManager.swift; sourceTree = "<group>"; };
+		30E7F7241F1628E47FA2FCBD /* AboutSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutSettingsView.swift; sourceTree = "<group>"; };
 		4235A18C835B7E7F93601EF4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4485DE0E91B1B02BA1549CF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		5C7FEEF8609CE1D88894AD67 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 		24444C4E53835873829C1E5B /* GhostCursor */ = {
 			isa = PBXGroup;
 			children = (
+				30E7F7241F1628E47FA2FCBD /* AboutSettingsView.swift */,
 				4235A18C835B7E7F93601EF4 /* AppDelegate.swift */,
 				80B32BAB6E5DDCCE614A77A6 /* AppState.swift */,
 				E88E8E1E8B4645BF914AC783 /* CursorReassertionCoordinator.swift */,
@@ -169,6 +172,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C2A0EE9EB49A3ECB2C9ACE6 /* AboutSettingsView.swift in Sources */,
 				4884856767FB25737FECEB70 /* AppDelegate.swift in Sources */,
 				4B356DB11FF64948C663EFF6 /* AppState.swift in Sources */,
 				E693F7CD1573496FBD8260ED /* CursorReassertionCoordinator.swift in Sources */,

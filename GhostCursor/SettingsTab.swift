@@ -2,4 +2,5 @@
 enum SettingsTab: Hashable {
     case general
     case shortcut
+    case about
 }

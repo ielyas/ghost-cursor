@@ -18,6 +18,10 @@ struct SettingsView: View {
             ShortcutSettingsView()
                 .tabItem { Label("Shortcut", systemImage: "keyboard") }
                 .tag(SettingsTab.shortcut)
+
+            AboutSettingsView()
+                .tabItem { Label("About", systemImage: "info.circle") }
+                .tag(SettingsTab.about)
         }
         .frame(width: 460)
         .onAppear {
