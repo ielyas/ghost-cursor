@@ -13,3 +13,13 @@ GhostCursor.xcodeproj/project.xcworkspace/xcuserdata/
 Core/.build/
 Core/.swiftpm/
 .swiftpm/
+
+# Internal planning (keep local; not for the public repo)
+PROJECT_SPEC.md
+plans/
+
+# Release build and publish artifacts
+dist/
+
+# Wrangler local state (R2 uploads authenticate through the CLI's own session)
+.wrangler/

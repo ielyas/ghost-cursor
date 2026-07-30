@@ -15,12 +15,17 @@ packages:
 settings:
   base:
     SWIFT_VERSION: "6.0"
-    MARKETING_VERSION: "0.1.0"
+    MARKETING_VERSION: "1.0.0"
     CURRENT_PROJECT_VERSION: "1"
     ENABLE_HARDENED_RUNTIME: YES
     CODE_SIGN_STYLE: Manual
     CODE_SIGN_IDENTITY: "-"
     DEAD_CODE_STRIPPING: YES
+  configs:
+    Release:
+      CODE_SIGN_IDENTITY: "Developer ID Application"
+      DEVELOPMENT_TEAM: M8A3G95883
+      OTHER_CODE_SIGN_FLAGS: "--timestamp"
 
 targets:
   GhostCursor:
@@ -41,7 +46,7 @@ targets:
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         LSMinimumSystemVersion: $(MACOSX_DEPLOYMENT_TARGET)
         LSUIElement: true
-        NSHumanReadableCopyright: ""
+        NSHumanReadableCopyright: "© 2026 National Idea LLC"
         SUFeedURL: https://ghostcursor.ni.sa/appcast.xml
         SUPublicEDKey: gEWu/GIBD8BWgt86K7EeXG03pwwzqWmbmG+eVyusEnM=
         SUEnableAutomaticChecks: false
