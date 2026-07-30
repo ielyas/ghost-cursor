@@ -14,6 +14,7 @@
 		448F9F3F5481C59A8C24D86E /* ShortcutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF1582A6489AF22A1E389EB /* ShortcutSettingsView.swift */; };
 		47FE294248F782992079D4F9 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 62F257B89852ADBB9257B62A /* Sparkle */; };
 		4884856767FB25737FECEB70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235A18C835B7E7F93601EF4 /* AppDelegate.swift */; };
+		49E3F9023FB537F9567FA21C /* UpdaterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 835B7E3DE63324258A3D9C40 /* UpdaterManager.swift */; };
 		4B356DB11FF64948C663EFF6 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B32BAB6E5DDCCE614A77A6 /* AppState.swift */; };
 		5196D397B27AAE78165D70C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02D62334F659CA7E2083D29B /* Assets.xcassets */; };
 		53E12B607FB0F70426A0C9C1 /* ShortcutRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07A36592E9A8551BFF0A18B0 /* ShortcutRecorderView.swift */; };
@@ -43,6 +44,7 @@
 		64DA239D414E440648CAB466 /* GhostCursorApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GhostCursorApp.swift; sourceTree = "<group>"; };
 		6DF1582A6489AF22A1E389EB /* ShortcutSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutSettingsView.swift; sourceTree = "<group>"; };
 		80B32BAB6E5DDCCE614A77A6 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		835B7E3DE63324258A3D9C40 /* UpdaterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdaterManager.swift; sourceTree = "<group>"; };
 		BBE3AF9AB3CACC1534B65593 /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
 		C358C0D361517A4E908A6985 /* SettingsWindowOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowOpener.swift; sourceTree = "<group>"; };
 		D79DB30FFD078853F4A7E0CD /* MenuBarContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarContent.swift; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				07A36592E9A8551BFF0A18B0 /* ShortcutRecorderView.swift */,
 				6DF1582A6489AF22A1E389EB /* ShortcutSettingsView.swift */,
 				F30E74468C3B0A8BF737CF67 /* SystemEventMonitor.swift */,
+				835B7E3DE63324258A3D9C40 /* UpdaterManager.swift */,
 			);
 			path = GhostCursor;
 			sourceTree = "<group>";
@@ -207,6 +210,7 @@
 				53E12B607FB0F70426A0C9C1 /* ShortcutRecorderView.swift in Sources */,
 				448F9F3F5481C59A8C24D86E /* ShortcutSettingsView.swift in Sources */,
 				123ED732C2D17FD0BC3021A1 /* SystemEventMonitor.swift in Sources */,
+				49E3F9023FB537F9567FA21C /* UpdaterManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

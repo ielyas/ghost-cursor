@@ -8,6 +8,7 @@ import SwiftUI
 /// to restore it is this app's worst failure mode, and this window is where a
 /// confused user will look first.
 struct AboutSettingsView: View {
+    @Environment(AppState.self) private var appState
     @State private var didCopyRecoveryCommand = false
 
     var body: some View {
@@ -31,6 +32,15 @@ struct AboutSettingsView: View {
                 .padding(.vertical, 8)
                 .listRowBackground(Color.clear)
                 .listRowInsets(EdgeInsets())
+            }
+
+            Section {
+                Button("Check for Updates…") {
+                    appState.updaterManager.checkForUpdates()
+                }
+                .disabled(!appState.updaterManager.canCheckForUpdates)
+            } footer: {
+                Text("GhostCursor checks only when you ask it to. It never checks on its own.")
             }
 
             Section("Privacy") {

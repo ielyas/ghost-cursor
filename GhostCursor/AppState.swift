@@ -25,6 +25,7 @@ final class AppState {
 
     let loginItemManager = LoginItemManager()
     let hotKeyManager = HotKeyManager()
+    let updaterManager = UpdaterManager()
 
     /// Nil means unassigned, which is fully supported — the menu bar item is the
     /// primary control and the shortcut is an accelerator.

@@ -21,6 +21,11 @@ struct MenuBarContent: View {
 
         Divider()
 
+        Button("Check for Updates…") {
+            appState.updaterManager.checkForUpdates()
+        }
+        .disabled(!appState.updaterManager.canCheckForUpdates)
+
         SettingsLink {
             Text("Settings…")
         }
