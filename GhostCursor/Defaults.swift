@@ -17,6 +17,9 @@ enum Defaults {
         /// these are deliberately left out of `register()`.
         static let hotKeyKeyCode = "hotKeyKeyCode"
         static let hotKeyModifiers = "hotKeyModifiers"
+        /// Gates the one-time "open Settings so the user can pick a shortcut"
+        /// flow. Deliberately unregistered: absent means "not yet run".
+        static let hasCompletedFirstRun = "hasCompletedFirstRun"
     }
 
     static func register() {

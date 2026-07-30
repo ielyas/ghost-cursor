@@ -7,6 +7,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         Log.lifecycle.info("GhostCursor launched")
         presentDegradationAlertIfNeeded()
         AppState.shared.start()
+        openSettingsOnFirstRunIfNeeded()
     }
 
     @MainActor
@@ -45,5 +46,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
                 NSApplication.shared.terminate(nil)
             }
         }
+    }
+
+    /// The spec's first-run flow: no shortcut exists by default, so the app asks
+    /// for one once. Gated by a flag rather than by "no shortcut assigned",
+    /// because leaving the shortcut unassigned is a supported choice and must not
+    /// reopen this window on every launch.
+    @MainActor
+    private func openSettingsOnFirstRunIfNeeded() {
+        guard !UserDefaults.standard.bool(forKey: Defaults.Key.hasCompletedFirstRun) else { return }
+        UserDefaults.standard.set(true, forKey: Defaults.Key.hasCompletedFirstRun)
+
+        Log.lifecycle.info("First run: opening Settings for shortcut assignment")
+        AppState.shared.pendingSettingsTab = .shortcut
+        SettingsWindowOpener.open()
     }
 }

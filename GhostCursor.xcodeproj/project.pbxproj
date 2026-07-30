@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		123ED732C2D17FD0BC3021A1 /* SystemEventMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30E74468C3B0A8BF737CF67 /* SystemEventMonitor.swift */; };
 		18F42A708766DF8A0A7605EC /* HotKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2973EF1E6B8F2DD24322FF24 /* HotKeyManager.swift */; };
+		1C87474955C3F681E8590759 /* SettingsWindowOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = C358C0D361517A4E908A6985 /* SettingsWindowOpener.swift */; };
 		2AC67670084489B3C6F3C5B7 /* MenuBarContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D79DB30FFD078853F4A7E0CD /* MenuBarContent.swift */; };
 		448F9F3F5481C59A8C24D86E /* ShortcutSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF1582A6489AF22A1E389EB /* ShortcutSettingsView.swift */; };
 		4884856767FB25737FECEB70 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4235A18C835B7E7F93601EF4 /* AppDelegate.swift */; };
@@ -38,6 +39,7 @@
 		6DF1582A6489AF22A1E389EB /* ShortcutSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutSettingsView.swift; sourceTree = "<group>"; };
 		80B32BAB6E5DDCCE614A77A6 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		BBE3AF9AB3CACC1534B65593 /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
+		C358C0D361517A4E908A6985 /* SettingsWindowOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowOpener.swift; sourceTree = "<group>"; };
 		D79DB30FFD078853F4A7E0CD /* MenuBarContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarContent.swift; sourceTree = "<group>"; };
 		E88E8E1E8B4645BF914AC783 /* CursorReassertionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CursorReassertionCoordinator.swift; sourceTree = "<group>"; };
 		F30E74468C3B0A8BF737CF67 /* SystemEventMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemEventMonitor.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				D79DB30FFD078853F4A7E0CD /* MenuBarContent.swift */,
 				FD7871B4DADB2D0C6C2BA6E3 /* SettingsTab.swift */,
 				5C7FEEF8609CE1D88894AD67 /* SettingsView.swift */,
+				C358C0D361517A4E908A6985 /* SettingsWindowOpener.swift */,
 				07A36592E9A8551BFF0A18B0 /* ShortcutRecorderView.swift */,
 				6DF1582A6489AF22A1E389EB /* ShortcutSettingsView.swift */,
 				F30E74468C3B0A8BF737CF67 /* SystemEventMonitor.swift */,
@@ -177,6 +180,7 @@
 				2AC67670084489B3C6F3C5B7 /* MenuBarContent.swift in Sources */,
 				E2178C03538402C5C0BCB3C1 /* SettingsTab.swift in Sources */,
 				BE10DACDB3DD3A59CBA5680F /* SettingsView.swift in Sources */,
+				1C87474955C3F681E8590759 /* SettingsWindowOpener.swift in Sources */,
 				53E12B607FB0F70426A0C9C1 /* ShortcutRecorderView.swift in Sources */,
 				448F9F3F5481C59A8C24D86E /* ShortcutSettingsView.swift in Sources */,
 				123ED732C2D17FD0BC3021A1 /* SystemEventMonitor.swift in Sources */,

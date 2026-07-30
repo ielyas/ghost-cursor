@@ -36,6 +36,10 @@ final class AppState {
         }
     }
 
+    /// Set by the first-run flow so `SettingsView` opens on the right pane. Not
+    /// persisted — it is a one-shot request, not a setting.
+    var pendingSettingsTab: SettingsTab?
+
     var autoHideEnabled: Bool {
         didSet {
             UserDefaults.standard.set(autoHideEnabled, forKey: Defaults.Key.autoHideEnabled)
