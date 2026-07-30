@@ -64,7 +64,6 @@ struct GeneralSettingsView: View {
             }
         }
         .formStyle(.grouped)
-        .frame(width: 460)
         // The login item can be revoked in System Settings while this window is
         // open, so re-read the truth whenever the pane appears.
         .onAppear { appState.loginItemManager.refresh() }
