@@ -1,8 +1,8 @@
 import AppKit
 import SwiftUI
 
-/// Settings › About. Version, the privacy statement, and — the part that matters
-/// — how to recover a cursor that is stuck hidden.
+/// Settings › About. Version, and — the part that matters — how to recover a
+/// cursor that is stuck hidden.
 ///
 /// The recovery text is not boilerplate: a hidden cursor with no running process
 /// to restore it is this app's worst failure mode, and this window is where a
@@ -14,6 +14,20 @@ struct AboutSettingsView: View {
     var body: some View {
         Form {
             Section {
+                HStack {
+                    Text(Self.versionString)
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                        .monospacedDigit()
+
+                    Spacer()
+
+                    Button("Check for Updates…") {
+                        appState.updaterManager.checkForUpdates()
+                    }
+                    .disabled(!appState.updaterManager.canCheckForUpdates)
+                }
+            } header: {
                 VStack(spacing: 8) {
                     Image(nsImage: NSWorkspace.shared.icon(forFile: Bundle.main.bundlePath))
                         .resizable()
@@ -22,29 +36,12 @@ struct AboutSettingsView: View {
 
                     Text(Self.appName)
                         .font(.title2.weight(.semibold))
-
-                    Text(Self.versionString)
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(.primary)
                 }
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 8)
-                .listRowBackground(Color.clear)
-                .listRowInsets(EdgeInsets())
-            }
-
-            Section {
-                Button("Check for Updates…") {
-                    appState.updaterManager.checkForUpdates()
-                }
-                .disabled(!appState.updaterManager.canCheckForUpdates)
-            } footer: {
-                Text("GhostCursor checks only when you ask it to. It never checks on its own.")
-            }
-
-            Section("Privacy") {
-                Text("GhostCursor stores no data, sends nothing anywhere, and needs no system permissions. It reads only how long ago a mouse event happened — never what the event was. The one time it uses the network is the update check you ask for.")
+                .textCase(nil)
             }
 
             Section("Recover a stuck cursor") {
