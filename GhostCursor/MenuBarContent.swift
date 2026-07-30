@@ -21,28 +21,6 @@ struct MenuBarContent: View {
 
         Divider()
 
-        #if DEBUG
-        // Keep all four. They are the only way to reproduce a background hide and
-        // a manual repair during QA.
-        Button("Hide Cursor Now (debug)") {
-            appState.cursorHider.hide()
-        }
-
-        Button("Hide Cursor in 5s (debug)") {
-            appState.cursorHider.debugHideAfterDelay()
-        }
-
-        Button("Reassert in 5s (debug)") {
-            appState.cursorHider.debugReassertAfterDelay()
-        }
-
-        Button("Show Cursor (debug)") {
-            appState.cursorHider.show()
-        }
-
-        Divider()
-        #endif
-
         SettingsLink {
             Text("Settings…")
         }

@@ -173,37 +173,3 @@ public final class CursorHider {
         Log.cursor.info("Reasserted hidden cursor after \(trigger.rawValue, privacy: .public)")
     }
 }
-
-#if DEBUG
-/// Debug-only helper for manual QA. `#if DEBUG` so it cannot ship; plan 008
-/// removes the debug menu entirely.
-extension CursorHider {
-    /// Hides the cursor five seconds after being called, so a tester can close
-    /// the menu first. This matters: clicking a menu item makes GhostCursor
-    /// frontmost, and a hide issued while frontmost is discarded the moment the
-    /// app deactivates — so an immediate hide from the menu does not reproduce
-    /// the state the product actually runs in.
-    public func debugHideAfterDelay() {
-        Log.cursor.info("debug: hide scheduled in 5s")
-        Task { @MainActor in
-            try? await Task.sleep(for: .seconds(5))
-            hide()
-        }
-    }
-
-    /// Repairs five seconds after being called, long after any space transition
-    /// has settled.
-    ///
-    /// Owner QA showed `reassert` reporting success on `spaceChanged` while the
-    /// cursor stayed visible, which has two possible causes: the repair races the
-    /// system and loses, or the repair does not work at all. This separates them —
-    /// if a repair this late succeeds, the cause is timing and only timing.
-    public func debugReassertAfterDelay() {
-        Log.cursor.info("debug: reassert scheduled in 5s")
-        Task { @MainActor in
-            try? await Task.sleep(for: .seconds(5))
-            reassert(trigger: .spaceChanged)
-        }
-    }
-}
-#endif
