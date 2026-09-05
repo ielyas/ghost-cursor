@@ -2,7 +2,7 @@
 
 GhostCursor is a tiny **macOS menu bar app** that hides the mouse cursor after
 idle and reveals it on movement. Native **Swift 6 + SwiftUI**, XcodeGen project,
-one third-party dependency (**Sparkle** for user-initiated updates only).
+one third-party dependency (**Sparkle** for updates).
 
 Full product intent lives in local `PROJECT_SPEC.md` (gitignored). Implementation
 history lives in local `plans/` (gitignored). Public docs: `README.md`,
@@ -24,9 +24,13 @@ history lives in local `plans/` (gitignored). Public docs: `README.md`,
 4. **Keep this AGENTS.md current** as commands, conventions, or release flow
    change.
 5. **Privacy product promises are load-bearing:** no Accessibility / Input
-   Monitoring prompts, no telemetry, no background network. The only network
-   path is a **user-initiated** Sparkle check. Do not add analytics, crash
-   reporters, or automatic update polling.
+   Monitoring prompts, no telemetry, no analytics, no crash reporters. The only
+   network path is Sparkle checking for updates — automatic and daily
+   (`SUScheduledCheckInterval`) by default since plan 015, with silent install
+   available as an opt-in toggle (off by default). `README.md`'s "Updates"
+   section and privacy bullet state this cadence and these defaults in plain
+   language; keep them in sync with `project.yml`'s Sparkle keys and
+   `UpdaterManager.swift` if either changes.
 6. **Cursor safety:** hide/show must go through the existing CursorHider /
    EmergencyCursorRestore paths. Never invent a “show cursor from another
    process” rescue — WindowServer hide counts are per-connection. Recovery

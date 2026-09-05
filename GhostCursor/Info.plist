@@ -27,13 +27,15 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>© 2026 National Idea LLC</string>
 	<key>SUAllowsAutomaticUpdates</key>
-	<false/>
+	<true/>
 	<key>SUEnableAutomaticChecks</key>
-	<false/>
+	<true/>
 	<key>SUFeedURL</key>
 	<string>https://ghostcursor.ni.sa/appcast.xml</string>
 	<key>SUPublicEDKey</key>
 	<string>gEWu/GIBD8BWgt86K7EeXG03pwwzqWmbmG+eVyusEnM=</string>
+	<key>SUScheduledCheckInterval</key>
+	<integer>86400</integer>
 	<key>SUVerifyUpdateBeforeExtraction</key>
 	<true/>
 </dict>

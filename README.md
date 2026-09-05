@@ -8,9 +8,9 @@ A tiny macOS menu bar app that hides the mouse cursor when you stop moving it, a
 brings it back the instant you do.
 
 - **No permissions.** No Accessibility prompt, no Input Monitoring prompt, nothing.
-- **No telemetry.** The only network request GhostCursor ever makes is the update
-  check you ask for, from the menu bar or Settings › About. It never checks on
-  its own.
+- **No telemetry.** The only network request GhostCursor ever makes is an update
+  check, about once a day by default. It sends no analytics and nothing that
+  identifies you, and you can turn it off in Settings › About.
 - **No data.** GhostCursor reads only *how long ago* a mouse event happened. It
   cannot see what you type, even in principle.
 
@@ -67,9 +67,10 @@ changes, and stays visible until you move the mouse again.
 
 ## Updates
 
-Pick **Check for Updates…** from the menu bar icon, or from Settings › About.
-That is the only moment GhostCursor talks to the network — there is no
-background check, no scheduled polling, and no prompt asking to enable one.
+GhostCursor checks for updates automatically, about once a day, and always
+asks before installing one. You can turn automatic checks off, or let updates
+install themselves without asking, in Settings › About — alongside the manual
+**Check for Updates…** button, also available from the menu bar icon.
 
 ## Building from source
 

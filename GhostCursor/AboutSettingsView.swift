@@ -27,6 +27,17 @@ struct AboutSettingsView: View {
                     }
                     .disabled(!appState.updaterManager.canCheckForUpdates)
                 }
+
+                Toggle("Check for Updates Automatically", isOn: Binding(
+                    get: { appState.updaterManager.automaticallyChecksForUpdates },
+                    set: { appState.updaterManager.automaticallyChecksForUpdates = $0 }
+                ))
+
+                Toggle("Download and Install Automatically", isOn: Binding(
+                    get: { appState.updaterManager.automaticallyDownloadsUpdates },
+                    set: { appState.updaterManager.automaticallyDownloadsUpdates = $0 }
+                ))
+                .disabled(!appState.updaterManager.automaticallyChecksForUpdates)
             } header: {
                 VStack(spacing: 8) {
                     Image(nsImage: NSWorkspace.shared.icon(forFile: Bundle.main.bundlePath))

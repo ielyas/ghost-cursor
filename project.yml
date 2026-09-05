@@ -49,8 +49,9 @@ targets:
         NSHumanReadableCopyright: "© 2026 National Idea LLC"
         SUFeedURL: https://ghostcursor.ni.sa/appcast.xml
         SUPublicEDKey: gEWu/GIBD8BWgt86K7EeXG03pwwzqWmbmG+eVyusEnM=
-        SUEnableAutomaticChecks: false
-        SUAllowsAutomaticUpdates: false
+        SUEnableAutomaticChecks: true
+        SUScheduledCheckInterval: 86400
+        SUAllowsAutomaticUpdates: true
         SUVerifyUpdateBeforeExtraction: true
     settings:
       base:

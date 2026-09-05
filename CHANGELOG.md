@@ -11,6 +11,13 @@ Release notes and converts it to HTML for Sparkle — do not hand-write
 
 ## [Unreleased]
 
+### Changed
+
+- GhostCursor now checks for updates automatically, about once a day,
+  instead of only when you ask. It still asks before installing anything —
+  you can turn automatic checks off, or let updates install themselves
+  without asking, in Settings › About.
+
 ## [1.1.0] — 2026-09-05
 
 Adds a shorter hide delay for people who want the cursor gone almost immediately.
