@@ -11,6 +11,10 @@ Release notes and converts it to HTML for Sparkle — do not hand-write
 
 ## [Unreleased]
 
+## [1.1.0] — 2026-09-05
+
+Adds a shorter hide delay for people who want the cursor gone almost immediately.
+
 ### Added
 
 - A 0.5 second hide delay option.
@@ -38,6 +42,7 @@ First public release.
 - User-initiated update checks via Sparkle (no background polling)
 - Developer ID signed and notarized distribution
 
-[Unreleased]: https://github.com/ielyas/ghost-cursor/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/ielyas/ghost-cursor/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/ielyas/ghost-cursor/releases/tag/v1.1.0
 [1.0.1]: https://github.com/ielyas/ghost-cursor/releases/tag/v1.0.1
 [1.0.0]: https://github.com/ielyas/ghost-cursor/releases/tag/v1.0.0
