@@ -11,6 +11,10 @@ Release notes and converts it to HTML for Sparkle — do not hand-write
 
 ## [Unreleased]
 
+## [1.2.0] — 2026-09-05
+
+GhostCursor now keeps itself up to date instead of waiting for you to check.
+
 ### Changed
 
 - GhostCursor now checks for updates automatically, about once a day,
@@ -49,7 +53,8 @@ First public release.
 - User-initiated update checks via Sparkle (no background polling)
 - Developer ID signed and notarized distribution
 
-[Unreleased]: https://github.com/ielyas/ghost-cursor/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/ielyas/ghost-cursor/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/ielyas/ghost-cursor/releases/tag/v1.2.0
 [1.1.0]: https://github.com/ielyas/ghost-cursor/releases/tag/v1.1.0
 [1.0.1]: https://github.com/ielyas/ghost-cursor/releases/tag/v1.0.1
 [1.0.0]: https://github.com/ielyas/ghost-cursor/releases/tag/v1.0.0
