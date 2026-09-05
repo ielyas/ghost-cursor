@@ -2,7 +2,7 @@ import Foundation
 
 /// The delay values the UI offers, and clamping for persisted values.
 public enum HideDelay {
-    public static let allowedValues: [TimeInterval] = [1, 2, 3, 5, 10, 15, 30, 60]
+    public static let allowedValues: [TimeInterval] = [0.5, 1, 2, 3, 5, 10, 15, 30, 60]
     public static let defaultValue: TimeInterval = 3
 
     /// Snaps an arbitrary value to the nearest allowed one. Used when reading
@@ -34,11 +34,17 @@ public enum HideDelay {
         return allowedValues[min(max(index, 0), allowedValues.count - 1)]
     }
 
-    /// Short label for menus, e.g. "3 seconds", "1 minute".
+    /// Short label for menus, e.g. "0.5 seconds", "3 seconds", "1 minute".
     public static func label(for value: TimeInterval) -> String {
         if value >= 60 {
             let minutes = Int(value / 60)
             return minutes == 1 ? "1 minute" : "\(minutes) minutes"
+        }
+        // Sub-second options keep their decimal — truncating to Int would label
+        // 0.5 as "0 seconds". Interpolating the Double stays locale-independent,
+        // which matters because these strings are not localized.
+        if value < 1 {
+            return "\(value) seconds"
         }
         let seconds = Int(value)
         return seconds == 1 ? "1 second" : "\(seconds) seconds"

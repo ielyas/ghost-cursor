@@ -23,3 +23,6 @@ dist/
 
 # Wrangler local state (R2 uploads authenticate through the CLI's own session)
 .wrangler/
+
+# Cursor hook runtime state (per-machine; rewritten every turn)
+.cursor/hooks/state/

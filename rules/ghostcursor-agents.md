@@ -1,9 +1,6 @@
----
-description: GhostCursor agent instructions from AGENTS.md (actionable only)
-alwaysApply: true
----
-
 # GhostCursor — agent rules
+
+_GhostCursor agent instructions from AGENTS.md (actionable only)_
 
 ## Golden rules
 

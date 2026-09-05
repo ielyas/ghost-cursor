@@ -11,6 +11,10 @@ Release notes and converts it to HTML for Sparkle — do not hand-write
 
 ## [Unreleased]
 
+### Added
+
+- A 0.5 second hide delay option.
+
 ## [1.0.1] — 2026-07-31
 
 Verifies the in-app update path; no behavior changes from 1.0.0.

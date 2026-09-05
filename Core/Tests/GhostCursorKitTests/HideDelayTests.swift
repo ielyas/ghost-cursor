@@ -3,7 +3,7 @@ import Testing
 @testable import GhostCursorKit
 
 @Test func allowedValuesMatchSpecification() {
-    #expect(HideDelay.allowedValues == [1, 2, 3, 5, 10, 15, 30, 60])
+    #expect(HideDelay.allowedValues == [0.5, 1, 2, 3, 5, 10, 15, 30, 60])
 }
 
 @Test func defaultIsThreeSeconds() {
@@ -29,8 +29,8 @@ import Testing
 }
 
 @Test func clampedHandlesBelowRange() {
-    #expect(HideDelay.clamped(0) == 1)
-    #expect(HideDelay.clamped(-5) == 1)
+    #expect(HideDelay.clamped(0) == 0.5)
+    #expect(HideDelay.clamped(-5) == 0.5)
 }
 
 @Test func clampedHandlesAboveRange() {
@@ -43,6 +43,7 @@ import Testing
 }
 
 @Test func labelsReadNaturally() {
+    #expect(HideDelay.label(for: 0.5) == "0.5 seconds")
     #expect(HideDelay.label(for: 1) == "1 second")
     #expect(HideDelay.label(for: 3) == "3 seconds")
     #expect(HideDelay.label(for: 60) == "1 minute")
@@ -56,8 +57,8 @@ import Testing
 }
 
 @Test func indexSnapsUnalignedValues() {
-    // 7 snaps to 5, which is at position 3.
-    #expect(HideDelay.index(of: 7) == 3)
+    // 7 snaps to 5, which is at position 4.
+    #expect(HideDelay.index(of: 7) == 4)
 }
 
 @Test func indexHandlesOffScaleValues() {
